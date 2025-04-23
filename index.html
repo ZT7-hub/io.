@@ -26,6 +26,25 @@
             <img src="IMG_3916.png"alt="THE logo" class="fortnite-image">
             <p class="welcome-text">قريبا <span class="highlight">soon</span></p>
         </div>
-    </nav
+    </nav>
+               <script>
+    
+    function toggleMenu() {
+        document.getElementById("menu").classList.toggle("active");
+    }
+
+    function showPage(pageId) {
+        document.querySelectorAll(".page-content").forEach(page => {
+            page.style.display = "none";
+        });
+        document.getElementById(pageId).style.display = "block";
+        document.getElementById("menu").classList.remove("active");
+    }
+
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        showPage('home'); 
+    });
+</script>
       </body>
 </html>
