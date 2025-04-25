@@ -1,50 +1,71 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZT7</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="https://i.imgur.com/bBHiI3r.png" type="image/png">
+    <title>عد تنازلي</title>
+    <style>
+        body {
+            background-color: #8e44ad; /* خلفية بنفسجية */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .countdown {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #8e44ad, #3498db); /* تدرج بنفسجي وزرقة */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(143, 0, 255, 0.3);
+        }
+
+        .message {
+            font-size: 1.5rem;
+            color: white;
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div id="countdown" class="countdown"></div>
+    <div id="message" class="message">قم بإعادة تحميل الصفحة!</div>
 
-    <nav>
-        <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <ul id="menu">
-            <li onclick="showPage('home')">home</li>
-            <li onclick="showPage('roblox')"> روبلوكس </li>
-            
-            <li onclick="showPage('fortnite')">فورت نايت</li>
-            <li onclick="showPage('esaign')">ايساين</li>
-            
-    </nav>
+    <script>
+        // تحديد الوقت الحالي
+        const now = new Date();
+        
+        // تحديد الساعة 9:00 مساءً (الوقت المحدد للنهاية)
+        const endTime = new Date();
+        endTime.setHours(21, 0, 0, 0); // الساعة 9:00 مساءً
 
-    <div id="home" class="page-content">
-        <div class="container">
-            <h1>ZT7</h1>
-            <img src="https://cdn-icons-png.flaticon.com/512/9908/9908218.png"alt="THE logo" class="fortnite-image">
-            <p class="welcome-text">قريبا <span class="highlight">soon</span></p>
-        </div>
-    </nav>
-               <script>
-    
-    function toggleMenu() {
-        document.getElementById("menu").classList.toggle("active");
-    }
+        // إذا كانت الساعة الحالية بعد الساعة 9:00 مساءً، ننتقل إلى اليوم التالي الساعة 9:00 مساءً
+        if (now > endTime) {
+            endTime.setDate(endTime.getDate() + 1);
+        }
 
-    function showPage(pageId) {
-        document.querySelectorAll(".page-content").forEach(page => {
-            page.style.display = "none";
-        });
-        document.getElementById(pageId).style.display = "block";
-        document.getElementById("menu").classList.remove("active");
-    }
+        function updateCountdown() {
+            const timeLeft = endTime - new Date().getTime();
 
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        showPage('home'); 
-    });
-</script>
-      </body>
+            if (timeLeft <= 0) {
+                document.getElementById('countdown').innerHTML = 'الوقت انتهى!';
+                document.getElementById('message').style.display = 'block'; // إظهار رسالة "إعادة تحميل"
+                clearInterval(interval); // إيقاف العد التنازلي
+            } else {
+                const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+                const seconds = Math.floor((timeLeft / 1000) % 60);
+                document.getElementById('countdown').innerHTML = `${hours} : ${minutes} : ${seconds}`;
+            }
+        }
+
+        // تحديث العد التنازلي كل ثانية
+        const interval = setInterval(updateCountdown, 1000);
+    </script>
+</body>
 </html>
